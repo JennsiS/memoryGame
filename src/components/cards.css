@@ -1,6 +1,5 @@
 /*@import "~bootstrap/scss/bootstrap";*/
-
-.btn-grad {background-image: linear-gradient(to right, #16BFFD 0%, #CB3066  51%, #16BFFD  100%)}
+.btn-grad {background-image: linear-gradient(to right, #e52d27 0%, #b31217  51%, #e52d27  100%)}
 .btn-grad {
    margin: 10px;
    padding: 15px 45px;
@@ -12,10 +11,12 @@
    box-shadow: 0 0 20px #eee;
    border-radius: 10px;
    display: block;
+   width: 200px;
+   height: 200px;
  }
 
-.btn-grad:hover {
+ .btn-grad:hover {
    background-position: right center; /* change the direction of the change here */
    color: #fff;
    text-decoration: none;
-}
+ }

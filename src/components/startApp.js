@@ -1,11 +1,13 @@
 import React from "react";
-import "./cards.css"
+import Board from "./Board.js";
+
 
 class StartApp extends React.Component {
     
     render() {
-        return (<h1>HELLO</h1>);
-      //return <button className="btn-grad"></button>;
+      return (
+        <Board />
+      );
     }
   }
   
