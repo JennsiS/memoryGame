@@ -4,16 +4,13 @@ import ReactCardFlip from 'react-card-flip';
 import superMarioLogo from './superMario.png';
 
 export default function Cards (props) {
-    const [isFlipped, setFlipped] = useState(false);
-    const [cardIcon, setCardIcon] = useState("");
       return (
         <div className="card">
-           
-             <ReactCardFlip isFlipped={isFlipped} flipDirection='vertical'>
-
+             <ReactCardFlip isFlipped={props.isFlipped} flipDirection='vertical'>
+               
              <div className=' location-front-item  frontCard'>
                   <div className='FirstCardsFrontText'>
-                  <button className="btn-grad" onClick= {()=>{setFlipped(!isFlipped)} }>
+                  <button className="btn-grad" onClick= {()=>{props.setFlipped(props.id)} }>
                         <img src={superMarioLogo} width="100%" height="100%"></img>
                   </button>
                   </div>
@@ -21,7 +18,7 @@ export default function Cards (props) {
  
               <div className=' location-back-item backCard'>
                   <div>
-                  <button className="btn-grad" onClick= {()=>{setFlipped(!isFlipped)} }>
+                  <button className="btn-grad" onClick= {()=>{props.setFlipped(props.id)} }>
                     <img src={props.icon} width="80%" height="80%"></img>
                   </button>
                   </div>

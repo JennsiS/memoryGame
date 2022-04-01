@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Board.css";
 import Cards from './Cards.js';
 import blooper from '../images/blooper.png';
@@ -14,63 +14,65 @@ import shuffle from "lodash.shuffle";
 let icons = [blooper,chomp,flower, goomba, luma,mushroom,shell,star,blooper,chomp,flower, goomba, luma,mushroom,shell,star];
 icons = shuffle(icons);
 
-class Board extends React.Component {
-    render() {
-      return (
-        <div className="grid-container">
-          <div className="header">header</div>
-          <div className="column-1">
-            <Cards icon={icons[0]}/>
-          </div>
-          <div className="column-2">
-          <Cards icon={icons[1]}/>
-          </div>
-          <div className="column-3">
-          <Cards icon={icons[2]}/>
-          </div>
-          <div className="column-4">
-          <Cards icon={icons[3]} />
-          </div>
-          <div className="column-5">
-          <Cards icon={icons[4]}/>
-          </div>
-          <div className="column-6">
-          <Cards icon={icons[5]}/>
-          </div>
-          <div className="column-7">
-          <Cards icon={icons[6]}/>
-          </div>
-          <div className="column-8">
-          <Cards icon={icons[7]}/>
-          </div>
-          <div className="column-9">
-          <Cards icon={icons[8]}/>
-          </div>
-          <div className="column-10">
-          <Cards icon={icons[9]}/>
-          </div>
-          <div className="column-11">
-          <Cards icon={icons[10]}/>
-          </div>
-          <div className="column-12">
-          <Cards icon={icons[11]}/>
-          </div>
-          <div className="column-13">
-          <Cards icon={icons[12]}/>
-          </div>
-          <div className="column-14">
-          <Cards icon={icons[13]}/>
-          </div>
-          <div className="column-15">
-          <Cards icon={icons[14]}/>
-          </div>
-          <div className="column-16">
-          <Cards icon={icons[15]}/>
-          </div>
-        </div>
+// const init = () =>{
+//   let deck = [blooper,chomp,flower, goomba, luma,mushroom,shell,star,blooper,chomp,flower, goomba, luma,mushroom,shell,star];
+//   deck = shuffle(deck);
+//   return {
+//     deck,
+//     pair: [],
+//     match:false,
+//     attemps: 0
+//   };
+// }
 
-      );
+
+
+export default function Board() {
+  const [cards, setCards] =  useState([{id:0, isFlipped: false}, {id:1, isFlipped: false}, {id:2, isFlipped: false},
+    {id:3, isFlipped: false}, {id:4, isFlipped: false}, {id:5, isFlipped: false}, {id:6, isFlipped: false},{id:7, isFlipped: false},
+    {id:8, isFlipped: false}, {id:9, isFlipped: false}, {id:10, isFlipped: false}, {id:11, isFlipped: false},{id:12, isFlipped: false},
+    {id:13, isFlipped: false}, {id:14, isFlipped: false}, {id:15, isFlipped: false}]);
+
+  const [pair, addPair] = useState([]);
+
+
+  // function cardsFlipped(){
+  //   let flipped = 0;
+  //   cards.forEach(element => {
+  //   });
+  // }
+
+  function changeFlip(cardId){
+    let card = cards.find(x => x.id === cardId);
+    let state = card.isFlipped;
+    card.isFlipped = (!state);
+    let newCards = cards;
+    newCards[card.id] = card;
+    setCards([...newCards]);
+    if (state===true){
+
     }
   }
+
+  function createBoard(){
+    const row =[];
+    for (let i = 0; i < 16; i++) {
+      let column = "column-"+i;
+      row.push(
+      <div className = {column}>
+        <Cards id={cards[i].id} isFlipped={cards[i].isFlipped} icon={icons[i]} setFlipped = {changeFlip}/>
+      </div>);
+    }
+    return row;
+  }
+   
+  return (
+        <div className="grid-container">
+          <div className="header">Memory game</div>
+          {createBoard()}
+
+        </div>
+
+  );
+}
   
-export default Board;
