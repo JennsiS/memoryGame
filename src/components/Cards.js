@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./cards.css";
 import ReactCardFlip from 'react-card-flip';
-import superMarioLogo from './superMario.png';
+import box from './box.png';
 
 export default function Cards (props) {
       return (
@@ -11,7 +11,7 @@ export default function Cards (props) {
              <div className=' location-front-item  frontCard'>
                   <div className='FirstCardsFrontText'>
                   <button className="btn-grad" onClick= {()=>{props.setFlipped(props.id)} }>
-                        <img src={superMarioLogo} width="100%" height="100%"></img>
+                        <img src={box} width="100%" height="80%"></img>
                   </button>
                   </div>
              </div>
@@ -19,7 +19,7 @@ export default function Cards (props) {
               <div className=' location-back-item backCard'>
                   <div>
                   <button className="btn-grad" onClick= {()=>{props.setFlipped(props.id)} }>
-                    <img src={props.icon} width="80%" height="80%"></img>
+                    <img src={props.icon} width="100%" height="80%"></img>
                   </button>
                   </div>
               </div>

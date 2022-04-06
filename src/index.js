@@ -5,7 +5,7 @@ import background from "./backgroundMario.jpg";
 
 //let div = document.getElementById("app");
 document.body.style.background =  `url(${background})`;
-document.body.style.backgroundSize = '80% 80%';
+document.body.style.backgroundSize = '130% 100%';
 
 ReactDOM.render(
     <StartApp />, document.getElementById("app")

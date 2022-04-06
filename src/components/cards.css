@@ -1,4 +1,10 @@
 /*@import "~bootstrap/scss/bootstrap";*/
+
+.card {
+  background-color: transparent !important;
+  border: 0% !important;
+}
+
 .btn-grad {background-image: linear-gradient(to right, #e52d27 0%, #b31217  51%, #e52d27  100%)}
 .btn-grad {
    margin: 10px;
