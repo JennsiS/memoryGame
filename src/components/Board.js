@@ -12,6 +12,7 @@ import star from '../images/star.png';
 import title from './title.png';
 import shuffle from "lodash.shuffle";
 import 'animate.css';
+import Alert from 'react-bootstrap/Alert'
 
 let icons = [blooper,chomp,flower, goomba, luma,mushroom,shell,star,blooper,chomp,flower, goomba, luma,mushroom,shell,star];
 icons = shuffle(icons);
@@ -26,6 +27,7 @@ export default function Board() {
   const [pairs, updatePair] = useState([]);
   const [attempts, updateAttempts] = useState(0);
   const [correctPairs, addPairs] = useState([]);
+  const [remainingCards, updateRemaining] = useState([...cards]);
 
   function changeFlip(cardId){
 
@@ -33,66 +35,81 @@ export default function Board() {
     let state = card.isFlipped;
     let newPair = pairs;
     let newCards = cards;
+    let remaining = remainingCards;
+    let correctPairsIds = correctPairs.filter(x => x.id == cardId).length
 
-    //Change the flip state of the card that has been choosen
-    card.isFlipped = (!state); 
-    newCards[card.id] = card;
-    setCards([...newCards]);
+    let flippedCards = remaining.filter(x => x.isFlipped === true).length
 
-    //Check if the card is flipped with the icon and the array that contain the pairs is less than 2
-    if (state==false && pairs.length <2){
-      newPair.push(card);
-      updatePair([...newPair]);
-    }
+    if ((flippedCards<2) && (correctPairsIds==0)){
+      //Change the flip state of the card that has been choosen
+      card.isFlipped = (!state); 
+      newCards[card.id] = card;
+      setCards([...newCards]);
 
-    let getPair = pairs;
-    //Check when a pair is made
-    if (getPair.length==2){
-      let newAttempt = attempts;
-      //Check if the icons of the pair cards are equal
-      if (getPair[0].icon ==getPair[1].icon){
-        alert("pareja");
-
-        // let indexFirstCard = newCards.map(x => {
-        //   return x.id;
-        // }).indexOf(getPair[0].id);
-        // newCards.splice(indexFirstCard, 1);
-
-        // let indexSecondCard = newCards.map(x => {
-        //   return x.id;
-        // }).indexOf(getPair[1].id);
-        // newCards.splice(indexSecondCard, 1);
-        // setCards([...newCards]);
-
-        let cardsPair = getPair.splice(0, 2);
-        updatePair([...getPair]); 
-        let newPairs = correctPairs;
-        newPairs.push(cardsPair);
-        addPairs([...newPairs]);
-
-        console.log(newPairs);
-
-      } else{
-        setTimeout(() => {
-          let updateCards = cards;
-          let card1 = updateCards.find(x => x.id === getPair[0].id);
-          let card2 = updateCards.find(x => x.id === getPair[1].id);
-          let card1State = card1.isFlipped;
-          let card2State = card2.isFlipped;
-          // Flip the cards that doesn't match
-          card1.isFlipped = !card1State;
-          card2.isFlipped = !card2State;
-          updateCards[card1.id] = card1;
-          updateCards[card2.id] = card2;
-
-          setCards([...updateCards]);
-          
-          getPair.splice(0, 2);
-          updatePair([...getPair]); 
-        }, 2000);
+      //Check if the card is flipped with the icon and the array that contain the pairs is less than 2
+      if (state==false && pairs.length <2){
+        newPair.push(card);
+        updatePair([...newPair]);
       }
-      newAttempt += 1;
-      updateAttempts(newAttempt);
+
+      let getPair = pairs;
+      //Check when a pair is made
+      if (getPair.length==2){
+        let newAttempt = attempts;
+        //Check if the icons of the pair cards are equal
+        if (getPair[0].icon ==getPair[1].icon){
+          alert("Nueva pareja 🌟");
+          
+          let indexFirstCard = remaining.map(x => {
+            return x.id;
+          }).indexOf(getPair[0].id);
+          remaining.splice(indexFirstCard, 1);
+
+          let indexSecondCard = remaining.map(x => {
+            return x.id;
+          }).indexOf(getPair[1].id);
+          remaining.splice(indexSecondCard, 1);
+
+          updateRemaining([...remaining]);
+
+          //Delete the pair of the array for compare pairs
+          let cardsPair = getPair.splice(0, 2);
+          updatePair([...getPair]); 
+          let newPairs = correctPairs;
+          newPairs.push(cardsPair[0]);
+          newPairs.push(cardsPair[1]);
+          addPairs([...newPairs]);
+
+          if (correctPairs.length == 16) {
+            alert("🥳 ¡Juego completado! 🥳");
+          //   <Alert variant="success">
+          //     <Alert.Heading>🥳 ¡Juego completado! 🥳</Alert.Heading>
+          //     <p> Has encontrado todas las parejas </p>
+          //   </Alert>
+          }
+
+        } else{
+          setTimeout(() => {
+            let updateCards = cards;
+            let card1 = updateCards.find(x => x.id === getPair[0].id);
+            let card2 = updateCards.find(x => x.id === getPair[1].id);
+            let card1State = card1.isFlipped;
+            let card2State = card2.isFlipped;
+            // Flip the cards that doesn't match
+            card1.isFlipped = !card1State;
+            card2.isFlipped = !card2State;
+            updateCards[card1.id] = card1;
+            updateCards[card2.id] = card2;
+
+            setCards([...updateCards]);
+            
+            getPair.splice(0, 2);
+            updatePair([...getPair]); 
+          }, 2000);
+        }
+        newAttempt += 1;
+        updateAttempts(newAttempt);
+      }
     }
   }
 
@@ -102,7 +119,7 @@ export default function Board() {
       let column = "column-"+i;
       row.push(
       <div className = {column}>
-        <Cards id={cards[i].id} isFlipped={cards[i].isFlipped} icon={cards[i].icon} setFlipped = {changeFlip}/>
+        <Cards key={i} id={cards[i].id} isFlipped={cards[i].isFlipped} icon={cards[i].icon} setFlipped = {changeFlip}/>
       </div>);
     }
     return row;
