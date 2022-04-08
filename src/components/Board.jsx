@@ -1,6 +1,5 @@
-/* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-alert */
-/* eslint-disable max-len */
+/* eslint-disable react/jsx-no-bind */
 import React, { useState } from 'react';
 import './Board.css';
 import shuffle from 'lodash.shuffle';
@@ -17,13 +16,21 @@ import title from './title.png';
 import 'animate.css';
 
 let icons = [
-  blooper, chomp, flower, goomba, luma, mushroom, shell, star, blooper, chomp, flower, goomba, luma, mushroom, shell, star,
+  blooper, chomp, flower, goomba, luma, mushroom, shell, star,
+  blooper, chomp, flower, goomba, luma, mushroom, shell, star,
 ];
 icons = shuffle(icons);
 
 export default function Board() {
   const [cards, setCards] = useState([
-    { id: 0, isFlipped: false, icon: icons[0] }, { id: 1, isFlipped: false, icon: icons[1] }, { id: 2, isFlipped: false, icon: icons[2] }, { id: 3, isFlipped: false, icon: icons[3] }, { id: 4, isFlipped: false, icon: icons[4] }, { id: 5, isFlipped: false, icon: icons[5] }, { id: 6, isFlipped: false, icon: icons[6] }, { id: 7, isFlipped: false, icon: icons[7] }, { id: 8, isFlipped: false, icon: icons[8] }, { id: 9, isFlipped: false, icon: icons[9] }, { id: 10, isFlipped: false, icon: icons[10] }, { id: 11, isFlipped: false, icon: icons[11] }, { id: 12, isFlipped: false, icon: icons[12] }, { id: 13, isFlipped: false, icon: icons[13] }, { id: 14, isFlipped: false, icon: icons[14] }, { id: 15, isFlipped: false, icon: icons[15] },
+    { id: 0, isFlipped: false, icon: icons[0] }, { id: 1, isFlipped: false, icon: icons[1] },
+    { id: 2, isFlipped: false, icon: icons[2] }, { id: 3, isFlipped: false, icon: icons[3] },
+    { id: 4, isFlipped: false, icon: icons[4] }, { id: 5, isFlipped: false, icon: icons[5] },
+    { id: 6, isFlipped: false, icon: icons[6] }, { id: 7, isFlipped: false, icon: icons[7] },
+    { id: 8, isFlipped: false, icon: icons[8] }, { id: 9, isFlipped: false, icon: icons[9] },
+    { id: 10, isFlipped: false, icon: icons[10] }, { id: 11, isFlipped: false, icon: icons[11] },
+    { id: 12, isFlipped: false, icon: icons[12] }, { id: 13, isFlipped: false, icon: icons[13] },
+    { id: 14, isFlipped: false, icon: icons[14] }, { id: 15, isFlipped: false, icon: icons[15] },
   ]);
   const [pairs, updatePair] = useState([]);
   const [attempts, updateAttempts] = useState(0);
@@ -53,7 +60,7 @@ export default function Board() {
         let newAttempt = attempts;
         // Check if the icons of the pair cards are equal
         if (getPair[0].icon === getPair[1].icon) {
-          alert('Nueva pareja 🌟');
+          // alert('Nueva pareja 🌟');
           const indexFirstCard = remaining.map((x) => x.id).indexOf(getPair[0].id);
           remaining.splice(indexFirstCard, 1);
           const indexSecondCard = remaining.map((x) => x.id).indexOf(getPair[1].id);
@@ -67,7 +74,8 @@ export default function Board() {
           newPairs.push(cardsPair[1]);
           addPairs([...newPairs]);
           if (correctPairs.length === 16) {
-            alert('🥳 ¡Juego completado! 🥳');
+            <h1>🥳 ¡Juego completado! 🥳</h1>;
+            // alert('🥳 ¡Juego completado! 🥳');
           }
         } else {
           setTimeout(() => {
@@ -95,10 +103,12 @@ export default function Board() {
     const row = [];
     for (let i = 0; i < 16; i += 1) {
       const column = `column-${i}`;
+      const cardId = cards[i].id;
+      const flipState = cards[i].isFlipped;
+      const iconCard = cards[i].icon;
       row.push(
-        // eslint-disable-next-line react/jsx-filename-extension
         <div className={column}>
-          <Cards key={i} id={cards[i].id} isFlipped={cards[i].isFlipped} icon={cards[i].icon} setFlipped={changeFlip} />
+          <Cards id={cardId} isFlipped={flipState} icon={iconCard} setFlipped={changeFlip} />
         </div>,
       );
     }
