@@ -1,8 +1,8 @@
-/* eslint-disable no-alert */
 /* eslint-disable react/jsx-no-bind */
 import React, { useState } from 'react';
 import './Board.css';
 import shuffle from 'lodash.shuffle';
+import swal from 'sweetalert';
 import Cards from './Cards';
 import blooper from '../images/blooper.png';
 import chomp from '../images/chomp.png';
@@ -74,7 +74,7 @@ export default function Board() {
           newPairs.push(cardsPair[1]);
           addPairs([...newPairs]);
           if (correctPairs.length === 16) {
-            <h1>🥳 ¡Juego completado! 🥳</h1>;
+            swal('🥳¡Juego completado! 🥳');
             // alert('🥳 ¡Juego completado! 🥳');
           }
         } else {
